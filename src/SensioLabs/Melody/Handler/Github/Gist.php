@@ -49,6 +49,7 @@ class Gist
     public function download()
     {
         $handle = curl_init();
+        $http_proxy = filter_input(INPUT_ENV, 'HTTPS_PROXY', FILTER_SANITIZE_URL);
 
         curl_setopt_array($handle, array(
             CURLOPT_URL            => sprintf('https://api.github.com/gists/%s', $this->id),
@@ -56,6 +57,7 @@ class Gist
                 "Accept: application/vnd.github.v3+json",
                 "User-Agent: Melody-Script"
             ),
+            CURLOPT_PROXY          => $http_proxy,
             CURLOPT_RETURNTRANSFER => 1,
         ));
 
